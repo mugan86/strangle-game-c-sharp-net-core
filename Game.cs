@@ -60,15 +60,38 @@ namespace StrangleGame
         Aquí es donde ya tenemos el flujo del juego en marcha mientras esté activa
         la partida hasta acertar o perder las vidas
         */
-        public void Play() {
+        public void Play()
+        {
             // Ir usando el debugger para ir cambiando la información
             // de los intentos, así vemos que pasa cuando llega a 0
-            while (Attemps > 0 && HideWordChars.Contains('_')) {
+            while (Attemps > 0 && HideWordChars.Contains('_'))
+            {
                 Console.WriteLine("Intentos: {0}", Attemps);
+                Console.Write("\nIntroduzca letra: ");
+                char inputChar;
+                try
+                {
+                    inputChar = Console.ReadLine()[0];
+                }
+                catch (IndexOutOfRangeException)
+                {
+                    Console.WriteLine("Introduzca un carácter válido de a-z");
+                    inputChar = ' ';
+                }
+                // Carácter unicodes list
+                if (inputChar >= 'a' && inputChar <= 'z')
+                {
+                    Console.WriteLine("Carácter válido, podemos mirar");
+
+                    // Comprobar si existe el carácter en la palabra oculta
+                }
             }
-            if (Attemps == 0) {
+            if (Attemps == 0)
+            {
                 DrawGameImage();
-            } else if (!HideWordChars.Contains('_')) {
+            }
+            else if (!HideWordChars.Contains('_'))
+            {
                 Console.Write("Enhorabuena, has acertado la palabra oculta");
             }
         }
@@ -193,6 +216,9 @@ namespace StrangleGame
                     break;
 
                 case 0:
+                    Console.ForegroundColor = ConsoleColor.DarkRed;
+                    Console.WriteLine($"GAME OVER - La palabra a acertar era \"{HideWord}\"");
+                    Console.ForegroundColor = ConsoleColor.White;
                     Console.WriteLine(" ---------------------");
                     Console.WriteLine(" |                     |");
                     Console.WriteLine(" |                     |");
@@ -214,7 +240,6 @@ namespace StrangleGame
 
                     }
                     Console.WriteLine("__________");
-                    Console.WriteLine($"GAME OVER - La palabra a acertar era \"{HideWord}\"");
                     break;
             }
         }
