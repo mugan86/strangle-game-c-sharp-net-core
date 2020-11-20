@@ -32,7 +32,8 @@ namespace StrangleGame
             char[] gameWordsHideChars = (HideWord.ToLower()).ToCharArray();
             // Crear Array a partir del creado para especificar los huecos antes de rellenarlo con "_"
             // en el caso de los carácteres ocultos y en correcto con la información original
-            HideWordChars = CorrectChars = new List<char>(gameWordsHideChars);
+            HideWordChars = new List<char>(gameWordsHideChars);
+            CorrectChars = new List<char>(gameWordsHideChars);
             InputCharsList = new List<char>();
             for (int i = 0; i < HideWordChars.Count; i++)
             {
@@ -85,8 +86,12 @@ namespace StrangleGame
                     {
                         InputCharsList.Add(inputChar);
                         // Comprobar si existe el carácter en la palabra oculta
-
+                        CheckExisteCharInWord(inputChar);
                         // Dibujar el estado del juego teniendo en cuenta los intentos y si ha acertado
+                        if (HideWordChars.Contains('_') && Attemps > 0) {
+                            DrawGameImage();
+                            // Dibujar el estado de la palabra
+                        }
                     } else if (InputCharsList.Contains(inputChar)) {
                         Console.ForegroundColor = ConsoleColor.DarkYellow;
                         Console.WriteLine("Ya has introducido el carácter {0}, prueba de nuevo", inputChar);
@@ -103,6 +108,27 @@ namespace StrangleGame
             else if (!HideWordChars.Contains('_'))
             {
                 Console.Write("Enhorabuena, has acertado la palabra oculta");
+            }
+        }
+        private void CheckExisteCharInWord(char inputChar)
+        {
+            if (CorrectChars.Contains(inputChar))
+            {
+                Console.WriteLine("Has acertado :)");
+                // Aádimos el carácter en las posiciones que son
+                for (int i = 0; i < HideWordChars.Count; i++)
+                {
+                    if (CorrectChars[i] == inputChar)
+                    {
+                        HideWordChars[i] = inputChar;
+                    }
+                }
+                // C
+            }
+            else
+            {
+                Attemps--;
+                Console.WriteLine("Lo siento, no has acertado :(");
             }
         }
         private void DrawGameImage()
