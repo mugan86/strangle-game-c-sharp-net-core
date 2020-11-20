@@ -33,7 +33,7 @@ namespace StrangleGame
             // Crear Array a partir del creado para especificar los huecos antes de rellenarlo con "_"
             // en el caso de los carácteres ocultos y en correcto con la información original
             HideWordChars = CorrectChars = new List<char>(gameWordsHideChars);
-
+            InputCharsList = new List<char>();
             for (int i = 0; i < HideWordChars.Count; i++)
             {
                 // Mirar si no hay un espacio en esa palabra. 
@@ -66,7 +66,6 @@ namespace StrangleGame
             // de los intentos, así vemos que pasa cuando llega a 0
             while (Attemps > 0 && HideWordChars.Contains('_'))
             {
-                Console.WriteLine("Intentos: {0}", Attemps);
                 Console.Write("\nIntroduzca letra: ");
                 char inputChar;
                 try
@@ -81,9 +80,20 @@ namespace StrangleGame
                 // Carácter unicodes list
                 if (inputChar >= 'a' && inputChar <= 'z')
                 {
-                    Console.WriteLine("Carácter válido, podemos mirar");
+                    // No existe el carácter y está en
+                    if (!InputCharsList.Contains(inputChar))
+                    {
+                        InputCharsList.Add(inputChar);
+                        // Comprobar si existe el carácter en la palabra oculta
 
-                    // Comprobar si existe el carácter en la palabra oculta
+                        // Dibujar el estado del juego teniendo en cuenta los intentos y si ha acertado
+                    } else if (InputCharsList.Contains(inputChar)) {
+                        Console.ForegroundColor = ConsoleColor.DarkYellow;
+                        Console.WriteLine("Ya has introducido el carácter {0}, prueba de nuevo", inputChar);
+                        Console.ForegroundColor = ConsoleColor.White;
+                    }
+                    
+                    
                 }
             }
             if (Attemps == 0)
