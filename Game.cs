@@ -26,7 +26,7 @@ namespace StrangleGame
             // Asignar intento
             Attemps = 6;
             // Asignamos la palabra secreta (luego cargamos de ficheros)
-            HideWord = "Ahorcado en C Sharp";
+            HideWord = "Ahorcado";
             // Array base con los carácteres de la palabra secreta (HideWord)
             // Primero convertir a minúscula la palabra secreta y luego convertir un array de caracteres
             char[] gameWordsHideChars = (HideWord.ToLower()).ToCharArray();
@@ -55,6 +55,22 @@ namespace StrangleGame
             // Para tener el apartado y la pista de palabra a buscar
             Console.WriteLine("Palabra a buscar: ");
             Console.WriteLine(GameWordsChars);
+        }
+        /*
+        Aquí es donde ya tenemos el flujo del juego en marcha mientras esté activa
+        la partida hasta acertar o perder las vidas
+        */
+        public void Play() {
+            // Ir usando el debugger para ir cambiando la información
+            // de los intentos, así vemos que pasa cuando llega a 0
+            while (Attemps > 0 && HideWordChars.Contains('_')) {
+                Console.WriteLine("Intentos: {0}", Attemps);
+            }
+            if (Attemps == 0) {
+                DrawGameImage();
+            } else if (!HideWordChars.Contains('_')) {
+                Console.Write("Enhorabuena, has acertado la palabra oculta");
+            }
         }
         private void DrawGameImage()
         {
