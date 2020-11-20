@@ -9,6 +9,7 @@ namespace StrangleGame
             // Menú 
 
             string optionSelect = "";
+            Game game;
             do
             {
                 Console.WriteLine("===============AHORCADO en C#===============");
@@ -29,6 +30,7 @@ namespace StrangleGame
                 {
                     case "1":
                         Console.WriteLine("Vamos a jugar partida aleatoria");
+                        game = new Game();
                         break;
                     case "2":
                         Console.WriteLine("Vamos a jugar partida eligiendo tema");
