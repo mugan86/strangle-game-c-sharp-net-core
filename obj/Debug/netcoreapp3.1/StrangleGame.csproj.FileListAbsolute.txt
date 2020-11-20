@@ -1,0 +1,12 @@
+/Users/anartz/Desktop/curso_c#/Proyecto/StrangleGame/bin/Debug/netcoreapp3.1/StrangleGame.deps.json
+/Users/anartz/Desktop/curso_c#/Proyecto/StrangleGame/bin/Debug/netcoreapp3.1/StrangleGame.runtimeconfig.json
+/Users/anartz/Desktop/curso_c#/Proyecto/StrangleGame/bin/Debug/netcoreapp3.1/StrangleGame.runtimeconfig.dev.json
+/Users/anartz/Desktop/curso_c#/Proyecto/StrangleGame/bin/Debug/netcoreapp3.1/StrangleGame.dll
+/Users/anartz/Desktop/curso_c#/Proyecto/StrangleGame/bin/Debug/netcoreapp3.1/StrangleGame.pdb
+/Users/anartz/Desktop/curso_c#/Proyecto/StrangleGame/obj/Debug/netcoreapp3.1/StrangleGame.csprojAssemblyReference.cache
+/Users/anartz/Desktop/curso_c#/Proyecto/StrangleGame/obj/Debug/netcoreapp3.1/StrangleGame.AssemblyInfoInputs.cache
+/Users/anartz/Desktop/curso_c#/Proyecto/StrangleGame/obj/Debug/netcoreapp3.1/StrangleGame.AssemblyInfo.cs
+/Users/anartz/Desktop/curso_c#/Proyecto/StrangleGame/obj/Debug/netcoreapp3.1/StrangleGame.csproj.CoreCompileInputs.cache
+/Users/anartz/Desktop/curso_c#/Proyecto/StrangleGame/obj/Debug/netcoreapp3.1/StrangleGame.dll
+/Users/anartz/Desktop/curso_c#/Proyecto/StrangleGame/obj/Debug/netcoreapp3.1/StrangleGame.pdb
+/Users/anartz/Desktop/curso_c#/Proyecto/StrangleGame/obj/Debug/netcoreapp3.1/StrangleGame.genruntimeconfig.cache
