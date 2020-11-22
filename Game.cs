@@ -1,5 +1,6 @@
 using System;
 using System.Collections.Generic;
+using System.IO;
 
 namespace StrangleGame
 {
@@ -21,7 +22,7 @@ namespace StrangleGame
             // Intentos por defecto 6
             Attemps = 6;
             // Añadimos palabra oculta fija
-            HideWord = "mario bros";
+            HideWord = LoadWords();
             // Convertir el string en un array de carácteres para aplicar las listas necesarias
             char [] charListElements = (HideWord.ToLower()).ToCharArray();
 
@@ -86,6 +87,11 @@ namespace StrangleGame
                 Console.WriteLine("Enhorabuena, has ganado");
                 Console.ForegroundColor = ConsoleColor.White;
             }
+        }
+        private string LoadWords() {
+            string loadDataText = File.ReadAllText("data/sagas-miticas.txt");
+            string [] words = loadDataText.Split("\n");
+            return words[0]; // Esto luego devolvemos una lista
         }
         private void DrawHideWord() {
             Console.WriteLine("Palabra a buscar: ");
