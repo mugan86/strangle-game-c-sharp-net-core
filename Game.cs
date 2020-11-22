@@ -22,7 +22,7 @@ namespace StrangleGame
             // Intentos por defecto 6
             Attemps = 6;
             // Añadimos palabra oculta fija
-            HideWord = LoadWords();
+            HideWord = GetHideWord();
             // Convertir el string en un array de carácteres para aplicar las listas necesarias
             char [] charListElements = (HideWord.ToLower()).ToCharArray();
 
@@ -88,10 +88,19 @@ namespace StrangleGame
                 Console.ForegroundColor = ConsoleColor.White;
             }
         }
-        private string LoadWords() {
+        private List<string> LoadWords() {
             string loadDataText = File.ReadAllText("data/sagas-miticas.txt");
             string [] words = loadDataText.Split("\n");
-            return words[0]; // Esto luego devolvemos una lista
+            return new List<string>(words); // Esto luego devolvemos una lista
+        }
+
+        private string GetHideWord() {
+            // Obtener la lista de palabras
+            List<string> hideWords = LoadWords();
+            // https://docs.microsoft.com/es-es/dotnet/api/system.random.next?view=netcore-3.1
+            Random rnd = new Random();
+            // Seleccionar palabra teniendo en cuenta una posición aleatoria
+            return hideWords[rnd.Next(0, hideWords.Count)]; 
         }
         private void DrawHideWord() {
             Console.WriteLine("Palabra a buscar: ");
