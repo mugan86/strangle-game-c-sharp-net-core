@@ -41,8 +41,7 @@ namespace StrangleGame
                 }
             }
             DrawGameImage();
-            Console.WriteLine("Palabra a buscar: ");
-            Console.WriteLine(GameWordChardsShow);
+            DrawHideWord();
         }
         public void Play() {
             // Mientras jugamos
@@ -64,14 +63,14 @@ namespace StrangleGame
                     Console.WriteLine("Caracter válido, empezaremos con las comprobaciones");
                     // Comprobar si ese caracter se ha introducido
                     if (!InputCharsList.Contains(inputChar)) {
+                        Console.Clear();
                         // Añadir para no repetir caracteres
                         InputCharsList.Add(inputChar);
                         // Comprobar si existe en la palabra oculta
                         CheckExistCharInWord(inputChar);
                         // Dibujar el estado dependiendo del resultado dado en la comprobación
                         DrawGameImage();
-                        Console.WriteLine("Palabra a buscar: ");
-                        Console.WriteLine(GameWordChardsShow);
+                        DrawHideWord();
                     } else {
                         Console.ForegroundColor = ConsoleColor.DarkYellow;
                         Console.WriteLine("Ya has introducido el caracter '{0}'. Prueba de nuevo por favor con otro caracter", inputChar);
@@ -87,6 +86,10 @@ namespace StrangleGame
                 Console.WriteLine("Enhorabuena, has ganado");
                 Console.ForegroundColor = ConsoleColor.White;
             }
+        }
+        private void DrawHideWord() {
+            Console.WriteLine("Palabra a buscar: ");
+            Console.WriteLine(GameWordChardsShow);
         }
         private void CheckExistCharInWord(char inputChar) {
             // Comprobar que existe dentro de CorrectChars
