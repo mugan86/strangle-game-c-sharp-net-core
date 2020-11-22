@@ -5,130 +5,106 @@ namespace StrangleGame
 {
     class Game
     {
-        // Necesitaremos
-        // ====================
-        // Intentos (número entero)
-        public int Attemps { get; set; }
-        // Palabra secreta (string)
+        // Vamos a añadir las propiedades del juego ahorcado
+        // Intentos necesarios
+        public int Attemps { get; set; } // Por defecto 6
+        // Palabra secreta
         public string HideWord { get; set; }
-        // los carácteres de la palabra del juego con lo oculto (string)
-        public string GameWordsChars { get; set; }
-        // Lista donde se almacenan los carácteres introducidos (Lista de carácteres)
-        public List<char> InputCharsList { get; set; }
-        // Lista de carácteres ocultos para controlar que faltan por acertar
-        public List<char> HideWordChars { get; set; }
-        // Lista de carácteres que almacena todos los carácteres de la palabra a acertar
-        public List<char> CorrectChars { get; set; }
-        // Teniendo en cuenta la palabra correcta, se almacena la información correcta
+        // Palabra oculta "encriptada"
+        public string GameWordChardsShow { get; set; }
 
-        public Game()
-        {
-            // Asignar intento
+        // Listas para el flujo del juego
+        public List<char> InputCharsList { get; set; }
+        public List<char> HideWordChars { get; set; } // se almacenan por defecto así => "_"
+        public List<char> CorrectChars { get; set; } // anartz => 'a', 'n', 'a', 'r', 't', 'z'
+        public Game() {
+            // Intentos por defecto 6
             Attemps = 6;
-            // Asignamos la palabra secreta (luego cargamos de ficheros)
-            HideWord = "Ahorcado";
-            // Array base con los carácteres de la palabra secreta (HideWord)
-            // Primero convertir a minúscula la palabra secreta y luego convertir un array de caracteres
-            char[] gameWordsHideChars = (HideWord.ToLower()).ToCharArray();
-            // Crear Array a partir del creado para especificar los huecos antes de rellenarlo con "_"
-            // en el caso de los carácteres ocultos y en correcto con la información original
-            HideWordChars = new List<char>(gameWordsHideChars);
-            CorrectChars = new List<char>(gameWordsHideChars);
+            // Añadimos palabra oculta fija
+            HideWord = "mario bros";
+            // Convertir el string en un array de carácteres para aplicar las listas necesarias
+            char [] charListElements = (HideWord.ToLower()).ToCharArray();
+
+            // Inicializar lista para los carácteres que vamos introduciendo
             InputCharsList = new List<char>();
-            for (int i = 0; i < HideWordChars.Count; i++)
-            {
-                // Mirar si no hay un espacio en esa palabra. 
-                // Si la hay no hacer nada en esa lista y si añadiendo en
-                // el apartado de la palabra a mostrar en el ojo
-                if (HideWordChars[i] != ' ')
-                {
-                    // Tenemos una letra para acertar
-                    GameWordsChars += "_ ";
+
+            HideWordChars = new List<char>(charListElements);
+
+            CorrectChars = new List<char>(charListElements);
+
+            for(int i = 0; i < HideWordChars.Count; i++) {
+                if (HideWordChars[i] != ' ') {
                     HideWordChars[i] = '_';
-                }
-                else
-                {
-                    GameWordsChars += "    ";
+                    GameWordChardsShow += "_ ";
+                } else {
+                    GameWordChardsShow += "  ";
                 }
             }
-            // Aquí deberiamos de dibujar la primera imagen
             DrawGameImage();
-            // Para tener el apartado y la pista de palabra a buscar
             Console.WriteLine("Palabra a buscar: ");
-            Console.WriteLine(GameWordsChars);
+            Console.WriteLine(GameWordChardsShow);
         }
-        /*
-        Aquí es donde ya tenemos el flujo del juego en marcha mientras esté activa
-        la partida hasta acertar o perder las vidas
-        */
-        public void Play()
-        {
-            // Ir usando el debugger para ir cambiando la información
-            // de los intentos, así vemos que pasa cuando llega a 0
-            while (Attemps > 0 && HideWordChars.Contains('_'))
-            {
-                Console.Write("\nIntroduzca letra: ");
-                char inputChar;
-                try
-                {
-                    inputChar = Console.ReadLine()[0];
+        public void Play() {
+            // Mientras jugamos
+            while(Attemps > 0 && HideWordChars.Contains('_')) {
+                // Introducir el carácter desde la consola con el teclado
+                char inputChar = ' ';
+                Console.Write("\nIntroduzca la letra: ");
+                try {
+                    inputChar = Console.ReadLine().ToLower() [0];
+                } catch(IndexOutOfRangeException) {
+                    Console.WriteLine("Debes de añadir algo de información");
+                    inputChar = '.';
+                } catch (Exception e) {
+                    Console.WriteLine("Error general {0}", e);
                 }
-                catch (IndexOutOfRangeException)
-                {
-                    Console.WriteLine("Introduzca un carácter válido de a-z");
-                    inputChar = ' ';
-                }
-                // Carácter unicodes list
-                if (inputChar >= 'a' && inputChar <= 'z')
-                {
-                    // No existe el carácter y está en
-                    if (!InputCharsList.Contains(inputChar))
-                    {
+
+                // Conprobar que es un carácter válido
+                if (inputChar >= 'a' && inputChar <= 'z') {
+                    Console.WriteLine("Caracter válido, empezaremos con las comprobaciones");
+                    // Comprobar si ese caracter se ha introducido
+                    if (!InputCharsList.Contains(inputChar)) {
+                        // Añadir para no repetir caracteres
                         InputCharsList.Add(inputChar);
-                        // Comprobar si existe el carácter en la palabra oculta
-                        CheckExisteCharInWord(inputChar);
-                        // Dibujar el estado del juego teniendo en cuenta los intentos y si ha acertado
-                        if (HideWordChars.Contains('_') && Attemps > 0) {
-                            DrawGameImage();
-                            // Dibujar el estado de la palabra
-                        }
-                    } else if (InputCharsList.Contains(inputChar)) {
+                        // Comprobar si existe en la palabra oculta
+                        CheckExistCharInWord(inputChar);
+                        // Dibujar el estado dependiendo del resultado dado en la comprobación
+                        DrawGameImage();
+                        Console.WriteLine("Palabra a buscar: ");
+                        Console.WriteLine(GameWordChardsShow);
+                    } else {
                         Console.ForegroundColor = ConsoleColor.DarkYellow;
-                        Console.WriteLine("Ya has introducido el carácter {0}, prueba de nuevo", inputChar);
+                        Console.WriteLine("Ya has introducido el caracter '{0}'. Prueba de nuevo por favor con otro caracter", inputChar);
                         Console.ForegroundColor = ConsoleColor.White;
                     }
-                    
-                    
                 }
             }
-            if (Attemps == 0)
-            {
+            // Partida finalizada
+            if (Attemps == 0) {
                 DrawGameImage();
-            }
-            else if (!HideWordChars.Contains('_'))
-            {
-                Console.Write("Enhorabuena, has acertado la palabra oculta");
+            } else if (!HideWordChars.Contains('_')) {
+                Console.ForegroundColor = ConsoleColor.Green;
+                Console.WriteLine("Enhorabuena, has ganado");
+                Console.ForegroundColor = ConsoleColor.White;
             }
         }
-        private void CheckExisteCharInWord(char inputChar)
-        {
-            if (CorrectChars.Contains(inputChar))
-            {
-                Console.WriteLine("Has acertado :)");
-                // Aádimos el carácter en las posiciones que son
-                for (int i = 0; i < HideWordChars.Count; i++)
-                {
-                    if (CorrectChars[i] == inputChar)
-                    {
+        private void CheckExistCharInWord(char inputChar) {
+            // Comprobar que existe dentro de CorrectChars
+            if (CorrectChars.Contains(inputChar)) {
+                // Hemos acertado
+                Console.WriteLine("Has acertado :).");
+                GameWordChardsShow = "";
+                for(int i = 0; i < HideWordChars.Count; i++) {
+                    if (CorrectChars[i] == inputChar) {
                         HideWordChars[i] = inputChar;
                     }
+                    GameWordChardsShow += (HideWordChars[i] != ' ') ? HideWordChars[i] + " " : "   ";
                 }
-                // C
-            }
-            else
-            {
+
+            } else {
+                // NO hemos acertado
                 Attemps--;
-                Console.WriteLine("Lo siento, no has acertado :(");
+                Console.WriteLine("No has acertadp, lo siento :(");
             }
         }
         private void DrawGameImage()
@@ -252,8 +228,8 @@ namespace StrangleGame
                     break;
 
                 case 0:
-                    Console.ForegroundColor = ConsoleColor.DarkRed;
-                    Console.WriteLine($"GAME OVER - La palabra a acertar era \"{HideWord}\"");
+                    Console.ForegroundColor = ConsoleColor.Red;
+                    Console.WriteLine($"GAME OVER - La palabra oculta es \"{HideWord}\"");
                     Console.ForegroundColor = ConsoleColor.White;
                     Console.WriteLine(" ---------------------");
                     Console.WriteLine(" |                     |");
@@ -276,6 +252,7 @@ namespace StrangleGame
 
                     }
                     Console.WriteLine("__________");
+                    
                     break;
             }
         }
